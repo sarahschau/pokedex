@@ -1,18 +1,24 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+    <div class="container">
+        <div class="row position-relative mt-5">
+            <img class="col-2 align-self-end" src="@/assets/Pokemon.svg" alt />
+            <h1 class="mt-5 mb-4 col-8 text-center">Pokedex</h1>
+            <img class="col-2 align-self-end" src="@/assets/Pokemon.svg" alt />
+        </div>
+
+        <PokemonList />
+    </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+<script lang="ts">
+import Vue from 'vue';
 
-export default {
-  name: "Home",
-  components: {
-    HelloWorld
-  }
-};
+import PokemonList from '@/components/PokemonList.vue';
+
+export default Vue.extend({
+    name: 'Home',
+    components: {
+        PokemonList
+    }
+});
 </script>
