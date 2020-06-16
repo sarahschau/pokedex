@@ -1,8 +1,12 @@
-import { Nullable } from './types';
+type Nullable<T> = T | null;
 
 interface ApiUrl {
     name: string;
     url: string;
+}
+
+interface PokemonEvolution {
+    name: Nullable<string>;
 }
 
 export interface PokemonAbility {
@@ -12,13 +16,11 @@ export interface PokemonAbility {
     abilityDescription: string;
 }
 
-interface PokemonEvolution {
-    name: Nullable<string>;
-}
-
 export interface PokemonListData {
     loading: boolean;
-    pokemons: Nullable<ApiUrl>;
+    pokemons: Array<ApiUrl>;
+    offset: number;
+    hideLoadButton: boolean;
 }
 
 export interface PokemonData {
