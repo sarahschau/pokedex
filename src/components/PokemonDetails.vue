@@ -1,49 +1,62 @@
 <template>
-    <div v-if="!loading" class="pokemon container">
-        <h1 class="text-uppercase text-center">{{ $route.params.id }} #{{ pokemonData.order }}</h1>
+    <div>
+        <div v-if="!loading" class="pokemon container">
+            <h1 class="text-uppercase text-center">
+                {{ $route.params.id + ' #' + pokemonData.order }}
+            </h1>
 
-        <div class="row mt-5">
-            <div class="col-12 col-md-4">
-                <img
-                    class="img img-fluid"
-                    :src="'https://pokeres.bastionbot.org/images/pokemon/' + pokemonData.id + '.png'"
-                    alt
-                />
+            <div class="row mt-5">
+                <div class="col-12 col-md-3">
+                    <img
+                        class="img img-fluid"
+                        :src="
+                            'https://pokeres.bastionbot.org/images/pokemon/' +
+                                pokemonData.id +
+                                '.png'
+                        "
+                        alt
+                    />
 
-                <div class="row mt-3">
-                    <div class="col">
-                        <p
-                            v-for="(type, idx) in pokemonData.types"
-                            :key="idx"
-                            class="badge badge-info mr-3 t-text"
-                        >
-                            <!-- eslint-disable-next-line -->
-                            {{ type.type.name }}
-                        </p>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <p
+                                v-for="(type, idx) in pokemonData.types"
+                                :key="idx"
+                                class="badge badge-info mr-3 t-text"
+                            >
+                                <!-- eslint-disable-next-line -->
+                                {{ type.type.name }}
+                            </p>
+                        </div>
                     </div>
+                </div>
+
+                <div class="col-12 col-md-4 offset-md-1 mt-5 mt-md-0">
+                    <!-- eslint-disable-next-line -->
+                    <pokemon-abilities
+                        :abilities="pokemonAbilities"
+                    ></pokemon-abilities>
+                </div>
+
+                <div class="col-12 col-md-4 mt-5 mt-md-0">
+                    <pokemon-stats :stats="pokemonData.stats"></pokemon-stats>
                 </div>
             </div>
 
-            <div class="col-12 col-md-4 mt-5 mt-md-0">
+            <div class="row mt-5">
+                <div class="col-12">
+                    <pokemon-moves :moves="pokemonData.moves"></pokemon-moves>
+                </div>
+            </div>
+
+            <div class="row my-5">
                 <!-- eslint-disable-next-line -->
-                <pokemon-abilities :abilities="pokemonAbilities"></pokemon-abilities>
-            </div>
-
-            <div class="col-12 col-md-4 mt-5 mt-md-0">
-                <pokemon-stats :stats="pokemonData.stats"></pokemon-stats>
+                <pokemon-evolution
+                    :pokemonEvolution="pokemonEvolution"
+                ></pokemon-evolution>
             </div>
         </div>
-
-        <div class="row mt-5">
-            <div class="col-12">
-                <pokemon-moves :moves="pokemonData.moves"></pokemon-moves>
-            </div>
-        </div>
-
-        <div class="row my-5">
-            <!-- eslint-disable-next-line -->
-            <pokemon-evolution :pokemonEvolution="pokemonEvolution"></pokemon-evolution>
-        </div>
+        <app-loading v-if="loading"></app-loading>
     </div>
 </template>
 
@@ -61,6 +74,7 @@ import {
     AbilityDetails
 } from '@/interfaces';
 
+import AppLoading from '@/components/AppLoading.vue';
 import PokemonEvolution from '@/components/PokemonEvolution.vue';
 import PokemonAbilities from '@/components/PokemonAbilities.vue';
 import PokemonMoves from '@/components/PokemonMoves.vue';
@@ -79,7 +93,8 @@ export default Vue.extend({
         PokemonEvolution,
         PokemonAbilities,
         PokemonMoves,
-        PokemonStats
+        PokemonStats,
+        AppLoading
     },
     mounted() {
         this.loading = true;
@@ -127,8 +142,7 @@ export default Vue.extend({
                     .then((response: AxiosResponse<EvolutionData>): void => {
                         const evolutionChain = (data: EvolutionSpecies) => {
                             this.pokemonEvolution.push({
-                                name: data.species.name,
-                                url: data.species.url
+                                name: data.species.name
                             });
                             if (data.evolves_to && !!data.evolves_to.length) {
                                 evolutionChain(data.evolves_to[0]);
