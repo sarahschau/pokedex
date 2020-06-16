@@ -6,7 +6,7 @@
             <img class="col-2 align-self-end" src="@/assets/Pokemon.svg" alt />
         </div>
 
-        <PokemonList />
+        <PokemonList class="mb-5" />
     </div>
 </template>
 
