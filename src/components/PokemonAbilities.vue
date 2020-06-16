@@ -7,6 +7,7 @@
                 <!-- eslint-disable-next-line -->
                 {{ ability.ability.name }}
                 <button
+                    v-if="ability.abilityDescription"
                     type="button"
                     class="btn btn-light my-2 ml-2 t-text"
                     data-toggle="tooltip"
