@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="!loading" class="pokemon container">
+        <div v-if="!loading" class="pokemon container pt-5 pt-md-0">
             <h1 class="text-center">
                 {{ formatTitle(pokemonData) }}
             </h1>
