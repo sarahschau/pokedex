@@ -14,7 +14,6 @@ export interface PokemonAbility {
 
 interface PokemonEvolution {
     name: Nullable<string>;
-    url: Nullable<string>;
 }
 
 export interface PokemonListData {
