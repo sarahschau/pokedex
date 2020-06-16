@@ -1,8 +1,8 @@
 <template>
     <div>
         <div v-if="!loading" class="pokemon container">
-            <h1 class="text-uppercase text-center">
-                {{ $route.params.id + ' #' + pokemonData.order }}
+            <h1 class="text-center">
+                {{ formatTitle(pokemonData) }}
             </h1>
 
             <div class="row mt-5">
@@ -179,6 +179,9 @@ export default Vue.extend({
                     });
             }
             this.fetchSpiecesInformation();
+        },
+        formatTitle(pokemonData: PokemonData) {
+            return (pokemonData.name + ' #' + pokemonData.order).toUpperCase();
         }
     }
 });
